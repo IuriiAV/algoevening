@@ -128,3 +128,57 @@ function getPeak(arr, left, right) {
     }
 
 }
+
+people = [10, 55, 70, 20, 90, 85];
+let limit = 100;
+console.log(`Number boats is  ${getNumberOfBoats(people,limit)}`);
+function getNumberOfBoats(people, limit) {
+        people.sort((a,b)=>a-b);  // O(n logn)
+        let left = 0;
+        let right = people.length - 1;
+        let boat = 0;
+        // {10, 20, 55, 70, 85, 90};
+        let currentWeight = 0;
+        while (left <= right) {  //n
+            currentWeight = people[left] + people[right]; // 90 + 10 , 20 + 85, 90
+            while (currentWeight <= limit && left < right) { //n
+                  left ++;  // 1(20)//2(55)
+                  currentWeight = currentWeight + people[left]; //110, 145
+            }
+            boat ++; //1//2//3
+            right--; //4 (85)// 3 (70), //2 (55)
+        }
+
+        return boat;
+
+    // Time complexity O(n logn) + O(n) = O(n logn)
+    // Space complexity = O(1) ,
+}
+
+let str =  "abeccdeba";
+console.log(`Is palindrome abeccdeba  ${isPalindrome(str)}`);
+function isPalindrome(str) {
+    let left = 0;
+    let right = str.length - 1;
+    while (left < right) {
+        let l = str[left];
+        let r = str[right];
+        if (l == r) {
+            left++;
+            right--;
+
+        } else {
+            return check(str, left + 1, right) || check(str, left, right - 1);
+        }
+    }
+    return true;
+}
+
+function check(str, left, right) {
+    while (left < right) {
+        if (str[left++] !== str[right--]) {
+            return false;
+        }
+    }
+    return true;
+}
